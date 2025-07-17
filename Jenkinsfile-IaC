@@ -15,7 +15,7 @@ pipeline{
         stage("Terraform Apply"){
             steps{
                 // 'gcp-service-account-key' คือ ID ของ Credential ที่คุณสร้างใน Jenkins
-                dir('/Terraform')
+                dir('Terraform')
                 {
                     withCredentials([file(credentialsId: 'gcp-service-account-key', variable: 'GCP_SA_KEY')]) {
                         script {
@@ -38,7 +38,7 @@ pipeline{
 
         stage("Ansible playbook"){
             steps{
-                dir('/Ansible')
+                dir('Ansible')
                 {
                     sh 'ansible-playbook -i inventory.ini main.yaml'
                 }
