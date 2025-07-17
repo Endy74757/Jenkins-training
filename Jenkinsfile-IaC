@@ -25,7 +25,7 @@ pipeline{
                         terraform init
 
                         echo "Applying Terraform configuration..."
-                        terraform apply -auto-approve
+                        # terraform apply -auto-approve
                         '''
                     }
                 }
