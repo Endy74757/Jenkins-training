@@ -3,6 +3,8 @@ pipeline{
     stages{
         stage("checkout from git repo"){
             steps{
+                sh 'echo "checkout git repo..."'
+
                 git branch: 'main',
                     url: 'https://github.com/Endy74757/gcp-terraform-infra.git'
                 
