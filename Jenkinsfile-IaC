@@ -15,26 +15,33 @@ pipeline{
         stage("Terraform Apply"){
             steps{
                 // 'gcp-service-account-key' คือ ID ของ Credential ที่คุณสร้างใน Jenkins
-                withCredentials([file(credentialsId: 'gcp-service-account-key', variable: 'GCP_SA_KEY')]) {
-                    script {
-                        sh '''
-                        # ตั้งค่า Environment Variable ให้ Terraform รู้จัก Service Account Key
-                        export GOOGLE_APPLICATION_CREDENTIALS=${GCP_SA_KEY}
+                dir('/Terraform')
+                {
+                    withCredentials([file(credentialsId: 'gcp-service-account-key', variable: 'GCP_SA_KEY')]) {
+                        script {
+                            sh '''
+                            # ตั้งค่า Environment Variable ให้ Terraform รู้จัก Service Account Key
+                            export GOOGLE_APPLICATION_CREDENTIALS=${GCP_SA_KEY}
 
-                        echo "Initializing Terraform..."
-                        terraform init
+                            echo "Initializing Terraform..."
+                            terraform init
 
-                        echo "Applying Terraform configuration..."
-                        # terraform apply -auto-approve
-                        '''
+                            echo "Applying Terraform configuration..."
+                            # terraform apply -auto-approve
+                            '''
+                        }
                     }
                 }
+                
             }
         }
 
         stage("Ansible playbook"){
             steps{
-                sh 'ansible-playbook -i inventory.ini main.yaml'
+                dir('/Ansible')
+                {
+                    sh 'ansible-playbook -i inventory.ini main.yaml'
+                }
             }
         }
 
