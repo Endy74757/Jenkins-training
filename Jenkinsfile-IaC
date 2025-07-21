@@ -6,6 +6,12 @@ pipeline{
         HTTPS_PROXY = 'http://192.168.1.6:3128'
     }
     stages{
+        stage("Test Web"){
+            steps{
+                echo "========Test Web1========"
+            }
+        }
+        
         stage("checkout from git repo"){
             steps{
                 sh 'echo "checkout git repo..."'
