@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage("Test Web"){
             steps{
-                echo "========Test Web2========"
+                echo "========Test Web1========"
             }
         }
         
